@@ -32,52 +32,53 @@ namespace SupermarketManagementSystem
                 Console.Write("Enter your choice: ");
                 choice = Convert.ToInt32(Console.ReadLine());
 
-               
-if (choice = 1)
+
+                if (choice == 1)
                 {
                     Product newProduct = new Product();
 
                     Console.Write("Enter Product Name: ");
-                    newProduct.ProductName == Console.ReadLine();
+                    newProduct.ProductName = Console.ReadLine();
 
                     Console.Write("Enter Barcode: ");
                     newProduct.Barcode = Console.ReadLine();
 
                     Console.Write("Enter Price: ");
-                    newProduct.Price = Convert.ToInt32(Console.ReadLine());
+                    newProduct.Price = Convert.ToDecimal(Console.ReadLine());
 
                     Console.Write("Enter Stock Quantity: ");
-                    newProduct.StockQuantity = Convert.ToDecimal(Console.ReadLine());
+                    newProduct.StockQuantity = Convert.ToInt32(Console.ReadLine());
 
-                    newProduct.RestockDate = DateTime.Now();
+                    newProduct.RestockDate = DateTime.Now;
 
-                    if (newProduct.StockQuantity >= 0)
-                    {
-                        newProduct.AvailabilityStatus = "Out of Stock";
-                    }
-                    else
+                    if (newProduct.StockQuantity > 0)
                     {
                         newProduct.AvailabilityStatus = "In Stock";
                     }
+                    else
+                    {
+                        newProduct.AvailabilityStatus = "Out of Stock";
+                    }
 
                     Console.Write("Enter Category ID: ");
-                    newProduct.CategoryId = Console.ReadLine();
+                    newProduct.CategoryId = Convert.ToInt32(Console.ReadLine());
 
                     Console.Write("Enter Supplier ID: ");
                     newProduct.SupplierId = Convert.ToInt32(Console.ReadLine());
 
                     using (SupermarketDbContext db = new SupermarketDbContext())
                     {
-                        db.Product.Add(newProduct);
-                        db.SaveChange();
+                        db.Products.Add(newProduct);
+                        db.SaveChanges();
                     }
 
-                    Console.WriteLine("Product added successfully.")
-}
-
-
+                    Console.WriteLine("Product added successfully.");
                 }
+
+
+
+            }
         }
             }
         }
-    }
+    
