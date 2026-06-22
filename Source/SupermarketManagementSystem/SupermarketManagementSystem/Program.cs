@@ -32,7 +32,6 @@ namespace SupermarketManagementSystem
                 Console.Write("Enter your choice: ");
                 choice = Convert.ToInt32(Console.ReadLine());
 
-
                 if (choice == 1)
                 {
                     Product newProduct = new Product();
@@ -101,11 +100,52 @@ namespace SupermarketManagementSystem
                     }
                 }
 
+                else if (choice == 3)
+                {
+                    Console.Write("Enter product name or barcode to search: ");
+                    string searchText = Console.ReadLine();
 
+                    bool found = false;
 
+                    using (SupermarketDbContext database = new SupermarketDbContext())
+                    {
+                        foreach (Product product in db.Products)
+                        {
+                            if (product.ProductName == searchText || product.Barcode == searchText)
+                            {
+                                Console.WriteLine("Product found:");
+                                Console.WriteLine("ID: " + product.ProductId);
+                                Console.WriteLine("Name: " + product.ProductName);
+                                Console.WriteLine("Barcode: " + product.Barcode);
+                                Console.WriteLine("Price: " + product.Price);
+                                Console.WriteLine("Stock: " + product.StockQuantity);
+                                Console.WriteLine("Supplier ID: " + product.SupplierId);
+                                Console.WriteLine("-----------------------------");
 
+                                found = true;
+                            }
+                        }
+                    }
+                }
+
+                    if (found == false)
+                    {
+                        Console.WriteLine("Product not found.");
+                    }
+                }
+
+                else if (choice == 0)
+                {
+                    Console.WriteLine("Exiting program...");
+                }
+
+                else
+                {
+                    Console.WriteLine("Invalid choice.");
+                }
+
+                Console.WriteLine();
             }
         }
-            }
-        }
-    
+    }
+}
