@@ -125,27 +125,77 @@ namespace SupermarketManagementSystem
                                 found = true;
                             }
                         }
-                    }
-                
 
-                    if (found == false)
-                    {
-                        Console.WriteLine("Product not found.");
+
+
+
+
+
+                else if (choice == 4)
+                        {
+                            Console.Write("Enter product ID to update stock: ");
+                            int productId = Convert.ToInt32(Console.ReadLine());
+
+                            Product productToUpdate = null;
+                            bool found = false;
+
+                            using (SupermarketDbContext db = new SupermarketDbContext())
+                            {
+                                foreach (Product product in db.Products)
+                                {
+                                    if (product.ProductId == productId)
+                                    {
+                                        productToUpdate = product;
+                                        found = true;
+                                    }
+                                }
+
+                                if (found == true)
+                                {
+                                    Console.Write("Enter new stock quantity: ");
+                                    productToUpdate.StockQuantity = Convert.ToInt32(Console.ReadLine());
+
+                                    if (productToUpdate.StockQuantity > 0)
+                                    {
+                                        productToUpdate.AvailabilityStatus = "In Stock";
+                                    }
+                                    else
+                                    {
+                                        productToUpdate.AvailabilityStatus = "Out of Stock";
+                                    }
+
+                                    db.SaveChanges();
+
+                                    Console.WriteLine("Stock updated successfully.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Product not found.");
+                                }
+                            }
+                        }
+
+
+
+
+                        if (found == false)
+                        {
+                            Console.WriteLine("Product not found.");
+                        }
                     }
-                }
 
                 else if (choice == 0)
-                {
-                    Console.WriteLine("Exiting program...");
-                }
+                    {
+                        Console.WriteLine("Exiting program...");
+                    }
 
-                else
-                {
-                    Console.WriteLine("Invalid choice.");
-                }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice.");
+                    }
 
-                Console.WriteLine();
+                    Console.WriteLine();
+                }
             }
         }
-    }
-}
+    } 
