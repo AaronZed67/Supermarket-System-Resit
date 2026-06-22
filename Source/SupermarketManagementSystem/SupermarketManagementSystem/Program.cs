@@ -107,7 +107,7 @@ namespace SupermarketManagementSystem
 
                     bool found = false;
 
-                    using (SupermarketDbContext database = new SupermarketDbContext())
+                    using (SupermarketDbContext db = new SupermarketDbContext())
                     {
                         foreach (Product product in db.Products)
                         {
@@ -126,7 +126,7 @@ namespace SupermarketManagementSystem
                             }
                         }
                     }
-                }
+                
 
                     if (found == false)
                     {
