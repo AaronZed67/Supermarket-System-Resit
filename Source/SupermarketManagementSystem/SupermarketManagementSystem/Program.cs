@@ -75,6 +75,33 @@ namespace SupermarketManagementSystem
                     Console.WriteLine("Product added successfully.");
                 }
 
+                else if (choice == 2)
+                {
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        bool productsFound = false;
+
+                        foreach (Product product in db.Products)
+                        {
+                            Console.WriteLine("ID: " + product.ProductId);
+                            Console.WriteLine("Name: " + product.ProductName);
+                            Console.WriteLine("Barcode: " + product.Barcode);
+                            Console.WriteLine("Price: " + product.Price);
+                            Console.WriteLine("Stock: " + product.StockQuantity);
+                            Console.WriteLine("Supplier ID: " + product.SupplierId);
+                            Console.WriteLine("-----------------------------");
+
+                            productsFound = true;
+                        }
+
+                        if (productsFound == false)
+                        {
+                            Console.WriteLine("No products have been added yet.");
+                        }
+                    }
+                }
+
+
 
 
             }
