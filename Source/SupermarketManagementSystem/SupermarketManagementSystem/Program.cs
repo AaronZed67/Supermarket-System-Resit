@@ -407,7 +407,35 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 12)
                 {
-                    Console.WriteLine("Remove Supplier option will be added later.");
+                    Console.Write("Enter supplier ID to remove: ");
+                    int supplierId = Convert.ToInt32(Console.ReadLine());
+
+                    Supplier supplierToRemove = null;
+                    bool found = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Supplier supplier in db.Suppliers)
+                        {
+                            if (supplier.SupplierId == supplierId)
+                            {
+                                supplierToRemove = supplier;
+                                found = true;
+                            }
+                        }
+
+                        if (found == true)
+                        {
+                            db.Suppliers.Remove(supplierToRemove);
+                            db.SaveChanges();
+
+                            Console.WriteLine("Supplier removed successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Supplier not found.");
+                        }
+                    }
                 }
 
                 else if (choice == 13)
