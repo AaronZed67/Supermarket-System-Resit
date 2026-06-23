@@ -442,10 +442,50 @@ namespace SupermarketManagementSystem
                 {
                     Console.WriteLine("Update Product Supplier option will be added later.");
                 }
-
+                
+                
+                
                 else if (choice == 14)
                 {
-                    Console.WriteLine("Update Product Price.");
+                    Console.Write("Enter product ID to update price: ");
+                    int productId = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Enter new product price: ");
+                    decimal newPrice = Convert.ToDecimal(Console.ReadLine());
+
+                    Product productToUpdate = null;
+                    bool found = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Product product in db.Products)
+                        {
+                            if (product.ProductId == productId)
+                            {
+                                productToUpdate = product;
+                                found = true;
+                            }
+                        }
+
+                        if (found == true)
+                        {
+                            if (newPrice > 0)
+                            {
+                                productToUpdate.Price = newPrice;
+                                db.SaveChanges();
+
+                                Console.WriteLine("Product price updated successfully.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Price must be greater than 0.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Product not found.");
+                        }
+                    }
                 }
 
 
