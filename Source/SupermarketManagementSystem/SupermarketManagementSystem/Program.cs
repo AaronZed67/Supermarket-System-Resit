@@ -239,7 +239,29 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 6)
                 {
-                    Console.WriteLine("Sales Report option will be added later.");
+                    Console.WriteLine("SALES REPORT");
+                    Console.WriteLine("------------");
+
+                    bool salesFound = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Sale sale in db.Sales)
+                        {
+                            Console.WriteLine("Sale ID: " + sale.SaleId);
+                            Console.WriteLine("Product ID: " + sale.ProductId);
+                            Console.WriteLine("Quantity Sold: " + sale.QuantitySold);
+                            Console.WriteLine("Sale Date: " + sale.SaleDate);
+                            Console.WriteLine("-----------------------------");
+
+                            salesFound = true;
+                        }
+                    }
+
+                    if (salesFound == false)
+                    {
+                        Console.WriteLine("No sales have been recorded.");
+                    }
                 }
 
                 else if (choice == 7)
@@ -276,6 +298,12 @@ namespace SupermarketManagementSystem
                 {
                     Console.WriteLine("Update Product Supplier option will be added later.");
                 }
+
+                else if (choice == 14)
+                {
+                    Console.WriteLine("Update Product Price.");
+                }
+
 
                 else if (choice == 0)
                 {
