@@ -179,7 +179,62 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 5)
                 {
-                    Console.WriteLine("Record Sale option will be added next.");
+                    Console.Write("Enter product ID for sale: ");
+                    int productId = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Enter quantity sold: ");
+                    int quantitySold = Convert.ToInt32(Console.ReadLine());
+
+                    Product productToSell = null;
+                    bool found = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Product product in db.Products)
+                        {
+                            if (product.ProductId == productId)
+                            {
+                                productToSell = product;
+                                found = true;
+                            }
+                        }
+
+                        if (found == true)
+                        {
+                            if (productToSell.StockQuantity >= quantitySold)
+                            {
+                                productToSell.StockQuantity = productToSell.StockQuantity - quantitySold;
+
+                                if (productToSell.StockQuantity > 0)
+                                {
+                                    productToSell.AvailabilityStatus = "In Stock";
+                                }
+                                else
+                                {
+                                    productToSell.AvailabilityStatus = "Out of Stock";
+                                }
+
+                                Sale newSale = new Sale();
+                                newSale.ProductId = productId;
+                                newSale.QuantitySold = quantitySold;
+                                newSale.SaleDate = DateTime.Now;
+
+                                db.Sales.Add(newSale);
+                                db.SaveChanges();
+
+                                Console.WriteLine("Sale recorded successfully.");
+                                Console.WriteLine("Remaining stock: " + productToSell.StockQuantity);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not enough stock to complete sale.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Product not found.");
+                        }
+                    }
                 }
 
                 else if (choice == 6)
