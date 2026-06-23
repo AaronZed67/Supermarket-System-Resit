@@ -298,7 +298,35 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 8)
                 {
-                    Console.WriteLine("Remove Product option will be added later.");
+                    Console.Write("Enter product ID to remove: ");
+                    int productId = Convert.ToInt32(Console.ReadLine());
+
+                    Product productToRemove = null;
+                    bool found = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Product product in db.Products)
+                        {
+                            if (product.ProductId == productId)
+                            {
+                                productToRemove = product;
+                                found = true;
+                            }
+                        }
+
+                        if (found == true)
+                        {
+                            db.Products.Remove(productToRemove);
+                            db.SaveChanges();
+
+                            Console.WriteLine("Product removed successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Product not found.");
+                        }
+                    }
                 }
 
                 else if (choice == 9)
