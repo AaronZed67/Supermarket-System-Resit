@@ -350,7 +350,28 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 10)
                 {
-                    Console.WriteLine("View Suppliers option will be added later.");
+                    Console.WriteLine("SUPPLIER LIST");
+                    Console.WriteLine("-------------");
+
+                    bool suppliersFound = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Supplier supplier in db.Suppliers)
+                        {
+                            Console.WriteLine("Supplier ID: " + supplier.SupplierId);
+                            Console.WriteLine("Supplier Name: " + supplier.SupplierName);
+                            Console.WriteLine("Contact Number: " + supplier.ContactNumber);
+                            Console.WriteLine("-----------------------------");
+
+                            suppliersFound = true;
+                        }
+                    }
+
+                    if (suppliersFound == false)
+                    {
+                        Console.WriteLine("No suppliers have been added yet.");
+                    }
                 }
 
                 else if (choice == 11)
