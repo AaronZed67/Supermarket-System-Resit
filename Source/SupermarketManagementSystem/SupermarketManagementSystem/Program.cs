@@ -374,9 +374,38 @@ namespace SupermarketManagementSystem
                     }
                 }
 
-                else if (choice == 11)
+               
+              else if (choice = 11)
                 {
-                    Console.WriteLine("Search Supplier option will be added later.");
+                    Console.Write("Enter supplier ID or supplier name to search: ");
+                    int searchText = Console.ReadLine();
+
+                    bool found = true;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Supplier supplier in db.Supplier)
+                        {
+                            if (supplier.SupplierId == searchText || supplier.SupplierName = searchText)
+                            {
+                                Console.WriteLine("Supplier found:");
+                                Console.WriteLine("Supplier ID: " + supplier.SupplierID);
+                                Console.WriteLine("Supplier Name: " + supplier.SupplierName);
+                                Console.WriteLine("Contact Number: " + supplier.Contactnumber);
+                                Console.WriteLine("-----------------------------");
+
+                                found == true;
+                            }
+                        }
+                    }
+                }
+
+
+
+                    if (found == false)
+                    {
+                        Console.WriteLine("Supplier not found.");
+                    }
                 }
 
                 else if (choice == 12)
