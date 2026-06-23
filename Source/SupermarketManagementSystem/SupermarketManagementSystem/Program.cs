@@ -266,7 +266,34 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 7)
                 {
-                    Console.WriteLine("Low Stock Report option will be added later.");
+                    Console.WriteLine("LOW STOCK REPORT");
+                    Console.WriteLine("----------------");
+
+                    bool lowStockFound = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Product product in db.Products)
+                        {
+                            if (product.StockQuantity <= 5)
+                            {
+                                Console.WriteLine("Product ID: " + product.ProductId);
+                                Console.WriteLine("Product Name: " + product.ProductName);
+                                Console.WriteLine("Barcode: " + product.Barcode);
+                                Console.WriteLine("Current Stock: " + product.StockQuantity);
+                                Console.WriteLine("Status: " + product.AvailabilityStatus);
+                                Console.WriteLine("Supplier ID: " + product.SupplierId);
+                                Console.WriteLine("-----------------------------");
+
+                                lowStockFound = true;
+                            }
+                        }
+                    }
+
+                    if (lowStockFound == false)
+                    {
+                        Console.WriteLine("No low stock products found.");
+                    }
                 }
 
                 else if (choice == 8)
