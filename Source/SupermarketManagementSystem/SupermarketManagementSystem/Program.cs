@@ -331,7 +331,21 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 9)
                 {
-                    Console.WriteLine("Add Supplier option will be added later.");
+                    Supplier newSupplier = new Supplier();
+
+                    Console.Write("Enter Supplier Name: ");
+                    newSupplier.SupplierName = Console.ReadLine();
+
+                    Console.Write("Enter Contact Number: ");
+                    newSupplier.ContactNumber = Console.ReadLine();
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        db.Suppliers.Add(newSupplier);
+                        db.SaveChanges();
+                    }
+
+                    Console.WriteLine("Supplier added successfully.");
                 }
 
                 else if (choice == 10)
