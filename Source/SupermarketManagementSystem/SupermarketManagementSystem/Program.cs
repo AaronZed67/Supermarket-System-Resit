@@ -26,6 +26,7 @@ namespace SupermarketManagementSystem
                 Console.WriteLine("11. Search Supplier");
                 Console.WriteLine("12. Remove Supplier");
                 Console.WriteLine("13. Update Product Supplier");
+                Console.WriteLine("14. Update Product Price");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine();
 
