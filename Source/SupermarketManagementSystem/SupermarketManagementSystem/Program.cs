@@ -440,11 +440,59 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 13)
                 {
-                    Console.WriteLine("Update Product Supplier option will be added later.");
+                    Console.Write("Enter product ID to update supplier: ");
+                    int productId = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Enter new supplier ID: ");
+                    int newSupplierId = Convert.ToInt32(Console.ReadLine());
+
+                    bool productFound = false;
+                    bool supplierFound = false;
+
+                    Product productToUpdate = null;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Supplier supplier in db.Suppliers)
+                        {
+                            if (supplier.SupplierId == newSupplierId)
+                            {
+                                supplierFound = true;
+                            }
+                        }
+
+                        if (supplierFound == true)
+                        {
+                            foreach (Product product in db.Products)
+                            {
+                                if (product.ProductId == productId)
+                                {
+                                    productToUpdate = product;
+                                    productFound = true;
+                                }
+                            }
+
+                            if (productFound == true)
+                            {
+                                productToUpdate.SupplierId = newSupplierId;
+                                db.SaveChanges();
+
+                                Console.WriteLine("Product supplier updated successfully.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Product not found.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Supplier not found.");
+                        }
+                    }
                 }
-                
-                
-                
+
+
+
                 else if (choice == 14)
                 {
                     Console.Write("Enter product ID to update price: ");
