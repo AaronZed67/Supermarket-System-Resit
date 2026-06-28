@@ -75,33 +75,46 @@ namespace SupermarketManagementSystem
                     }
 
                     Console.Write("Enter Price: ");
-                    newProduct.Price = Convert.ToDecimal(Console.ReadLine());
+                    string priceInput = Console.ReadLine();
 
-                    if (newProduct.Price <= 0)
+                    decimal price;
+
+                    bool priceValid = decimal.TryParse(priceInput, out price);
+
+                    if (priceValid == false)
+                    {
+                        Console.WriteLine("Price must be a number.");
+                        continue;
+                    }
+
+                    if (price <= 0)
                     {
                         Console.WriteLine("Price must be greater than 0.");
                         continue;
                     }
 
-                    Console.Write("Enter Stock Quantity: ");
-                    newProduct.StockQuantity = Convert.ToInt32(Console.ReadLine());
+                    newProduct.Price = price;
 
-                    if (newProduct.StockQuantity < 0)
+                    Console.Write("Enter Stock Quantity: ");
+                    string stockInput = Console.ReadLine();
+
+                    int stockQuantity;
+
+                    bool stockValid = int.TryParse(stockInput, out stockQuantity);
+
+                    if (stockValid == false)
+                    {
+                        Console.WriteLine("Stock quantity must be a whole number.");
+                        continue;
+                    }
+
+                    if (stockQuantity < 0)
                     {
                         Console.WriteLine("Stock quantity cannot be negative.");
                         continue;
                     }
 
-                    newProduct.RestockDate = DateTime.Now;
-
-                    if (newProduct.StockQuantity > 0)
-                    {
-                        newProduct.AvailabilityStatus = "In Stock";
-                    }
-                    else
-                    {
-                        newProduct.AvailabilityStatus = "Out of Stock";
-                    }
+                    newProduct.StockQuantity = stockQuantity;
 
                     Console.Write("Enter Category ID: ");
                     newProduct.CategoryId = Convert.ToInt32(Console.ReadLine());
