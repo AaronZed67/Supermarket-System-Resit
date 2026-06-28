@@ -399,8 +399,20 @@ namespace SupermarketManagementSystem
                     Console.Write("Enter Supplier Name: ");
                     newSupplier.SupplierName = Console.ReadLine();
 
+                    if (newSupplier.SupplierName == "")
+                    {
+                        Console.WriteLine("Supplier name is required.");
+                        continue;
+                    }
+
                     Console.Write("Enter Contact Number: ");
                     newSupplier.ContactNumber = Console.ReadLine();
+
+                    if (newSupplier.ContactNumber == "")
+                    {
+                        Console.WriteLine("Supplier contact number is required.");
+                        continue;
+                    }
 
                     using (SupermarketDbContext db = new SupermarketDbContext())
                     {
