@@ -242,6 +242,12 @@ namespace SupermarketManagementSystem
                     Console.Write("Enter quantity sold: ");
                     int quantitySold = Convert.ToInt32(Console.ReadLine());
 
+                    if (quantitySold <= 0)
+                    {
+                        Console.WriteLine("Quantity sold must be greater than 0.");
+                        continue;
+                    }
+
                     Product productToSell = null;
                     bool found = false;
 
