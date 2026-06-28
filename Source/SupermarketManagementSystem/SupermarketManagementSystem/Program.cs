@@ -40,14 +40,57 @@ namespace SupermarketManagementSystem
                     Console.Write("Enter Product Name: ");
                     newProduct.ProductName = Console.ReadLine();
 
+                    if (newProduct.ProductName == "")
+                    {
+                        Console.WriteLine("Product name is required.");
+                        continue;
+                    }
+
                     Console.Write("Enter Barcode: ");
                     newProduct.Barcode = Console.ReadLine();
+
+                    if (newProduct.Barcode == "")
+                    {
+                        Console.WriteLine("Barcode is required.");
+                        continue;
+                    }
+
+                    bool barcodeExists = false;
+
+                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    {
+                        foreach (Product product in db.Products)
+                        {
+                            if (product.Barcode == newProduct.Barcode)
+                            {
+                                barcodeExists = true;
+                            }
+                        }
+                    }
+
+                    if (barcodeExists == true)
+                    {
+                        Console.WriteLine("A product with this barcode already exists.");
+                        continue;
+                    }
 
                     Console.Write("Enter Price: ");
                     newProduct.Price = Convert.ToDecimal(Console.ReadLine());
 
+                    if (newProduct.Price <= 0)
+                    {
+                        Console.WriteLine("Price must be greater than 0.");
+                        continue;
+                    }
+
                     Console.Write("Enter Stock Quantity: ");
                     newProduct.StockQuantity = Convert.ToInt32(Console.ReadLine());
+
+                    if (newProduct.StockQuantity < 0)
+                    {
+                        Console.WriteLine("Stock quantity cannot be negative.");
+                        continue;
+                    }
 
                     newProduct.RestockDate = DateTime.Now;
 
