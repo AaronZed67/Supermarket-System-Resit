@@ -48,3 +48,25 @@ VALUES
 (4, 4, GETDATE(), GETDATE());
 GO
 
+INSERT INTO Sales
+(
+    ProductId,
+    QuantitySold,
+    SaleDate
+)
+VALUES
+(1, 2, GETDATE()),
+(2, 1, GETDATE());
+GO
+
+INSERT INTO SaleItems
+(
+    SaleId,
+    ProductId,
+    QuantitySold,
+    UnitPrice
+)
+VALUES
+(1, 1, 2, 1.50),
+(2, 2, 1, 1.20);
+GO
