@@ -1,5 +1,6 @@
 ﻿using SupermarketManagementSystem.Models;
 using SupermarketManagementSystem.Data;
+using SupermarketManagementSystem.DataStructures;
 
 namespace SupermarketManagementSystem
 {
@@ -162,29 +163,35 @@ namespace SupermarketManagementSystem
                     Console.Write("Enter product name or barcode to search: ");
                     string searchText = Console.ReadLine();
 
-                    bool found = false;
+                    CustomProductList productList = new CustomProductList();
 
                     using (SupermarketDbContext db = new SupermarketDbContext())
                     {
                         foreach (Product product in db.Products)
                         {
-                            if (product.ProductName == searchText || product.Barcode == searchText)
-                            {
-                                Console.WriteLine("Product found:");
-                                Console.WriteLine("ID: " + product.ProductId);
-                                Console.WriteLine("Name: " + product.ProductName);
-                                Console.WriteLine("Barcode: " + product.Barcode);
-                                Console.WriteLine("Price: " + product.Price);
-                                Console.WriteLine("Stock: " + product.StockQuantity);
-                                Console.WriteLine("Supplier ID: " + product.SupplierId);
-                                Console.WriteLine("-----------------------------");
-
-                                found = true;
-                            }
+                            productList.AddProduct(product);
                         }
                     }
 
-                    if (found == false)
+                    Product foundProduct = productList.SearchByName(searchText);
+
+                    if (foundProduct == null)
+                    {
+                        foundProduct = productList.SearchByBarcode(searchText);
+                    }
+
+                    if (foundProduct != null)
+                    {
+                        Console.WriteLine("Product found:");
+                        Console.WriteLine("ID: " + foundProduct.ProductId);
+                        Console.WriteLine("Name: " + foundProduct.ProductName);
+                        Console.WriteLine("Barcode: " + foundProduct.Barcode);
+                        Console.WriteLine("Price: " + foundProduct.Price);
+                        Console.WriteLine("Stock: " + foundProduct.StockQuantity);
+                        Console.WriteLine("Supplier ID: " + foundProduct.SupplierId);
+                        Console.WriteLine("-----------------------------");
+                    }
+                    else
                     {
                         Console.WriteLine("Product not found.");
                     }
