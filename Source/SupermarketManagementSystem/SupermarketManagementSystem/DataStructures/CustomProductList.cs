@@ -22,6 +22,32 @@ namespace SupermarketManagementSystem.DataStructures
             }
         }
 
+        public Product SearchByName(string productName)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (products[i].ProductName == productName)
+                {
+                    return products[i];
+                }
+            }
+
+            return null;
+        }
+
+        public Product SearchByBarcode(string barcode)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (products[i].Barcode == barcode)
+                {
+                    return products[i];
+                }
+            }
+
+            return null;
+        }
+
         public int GetCount()
         {
             return count;
