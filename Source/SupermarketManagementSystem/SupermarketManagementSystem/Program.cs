@@ -515,26 +515,32 @@ namespace SupermarketManagementSystem
                     Console.Write("Enter supplier ID or supplier name to search: ");
                     string searchText = Console.ReadLine();
 
-                    bool found = false;
+                    CustomSupplierList supplierList = new CustomSupplierList();
 
                     using (SupermarketDbContext db = new SupermarketDbContext())
                     {
                         foreach (Supplier supplier in db.Suppliers)
                         {
-                            if (supplier.SupplierId.ToString() == searchText || supplier.SupplierName == searchText)
-                            {
-                                Console.WriteLine("Supplier found:");
-                                Console.WriteLine("Supplier ID: " + supplier.SupplierId);
-                                Console.WriteLine("Supplier Name: " + supplier.SupplierName);
-                                Console.WriteLine("Contact Number: " + supplier.ContactNumber);
-                                Console.WriteLine("-----------------------------");
-
-                                found = true;
-                            }
+                            supplierList.AddSupplier(supplier);
                         }
                     }
 
-                    if (found == false)
+                    Supplier foundSupplier = supplierList.SearchById(searchText);
+
+                    if (foundSupplier == null)
+                    {
+                        foundSupplier = supplierList.SearchByName(searchText);
+                    }
+
+                    if (foundSupplier != null)
+                    {
+                        Console.WriteLine("Supplier found:");
+                        Console.WriteLine("Supplier ID: " + foundSupplier.SupplierId);
+                        Console.WriteLine("Supplier Name: " + foundSupplier.SupplierName);
+                        Console.WriteLine("Contact Number: " + foundSupplier.ContactNumber);
+                        Console.WriteLine("-----------------------------");
+                    }
+                    else
                     {
                         Console.WriteLine("Supplier not found.");
                     }
