@@ -117,11 +117,46 @@ namespace SupermarketManagementSystem
 
                     newProduct.StockQuantity = stockQuantity;
 
+                    if (newProduct.StockQuantity > 0)
+                    {
+                        newProduct.AvailabilityStatus = "In Stock";
+                    }
+                    else
+                    {
+                        newProduct.AvailabilityStatus = "Out of Stock";
+                    }
+
+                    newProduct.RestockDate = DateTime.Now;
+
                     Console.Write("Enter Category ID: ");
-                    newProduct.CategoryId = Convert.ToInt32(Console.ReadLine());
+                    string categoryInput = Console.ReadLine();
+
+                    int categoryId;
+
+                    bool categoryValid = int.TryParse(categoryInput, out categoryId);
+
+                    if (categoryValid == false)
+                    {
+                        Console.WriteLine("Category ID must be a whole number.");
+                        continue;
+                    }
+
+                    newProduct.CategoryId = categoryId;
 
                     Console.Write("Enter Supplier ID: ");
-                    newProduct.SupplierId = Convert.ToInt32(Console.ReadLine());
+                    string supplierInput = Console.ReadLine();
+
+                    int supplierId;
+
+                    bool supplierValid = int.TryParse(supplierInput, out supplierId);
+
+                    if (supplierValid == false)
+                    {
+                        Console.WriteLine("Supplier ID must be a whole number.");
+                        continue;
+                    }
+
+                    newProduct.SupplierId = supplierId;
 
                     using (SupermarketDbContext db = new SupermarketDbContext())
                     {
@@ -199,8 +234,8 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 4)
                 {
-                    Console.Write("Enter product ID to update stock: ");
-                    int productId = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Enter product ID or product name to update stock: ");
+                    string searchText = Console.ReadLine();
 
                     Product productToUpdate = null;
                     bool found = false;
@@ -209,7 +244,7 @@ namespace SupermarketManagementSystem
                     {
                         foreach (Product product in db.Products)
                         {
-                            if (product.ProductId == productId)
+                            if (product.ProductId.ToString() == searchText || product.ProductName == searchText)
                             {
                                 productToUpdate = product;
                                 found = true;
@@ -219,7 +254,25 @@ namespace SupermarketManagementSystem
                         if (found == true)
                         {
                             Console.Write("Enter new stock quantity: ");
-                            productToUpdate.StockQuantity = Convert.ToInt32(Console.ReadLine());
+                            string stockInput = Console.ReadLine();
+
+                            int newStockQuantity;
+
+                            bool stockValid = int.TryParse(stockInput, out newStockQuantity);
+
+                            if (stockValid == false)
+                            {
+                                Console.WriteLine("Stock quantity must be a whole number.");
+                                continue;
+                            }
+
+                            if (newStockQuantity < 0)
+                            {
+                                Console.WriteLine("Stock quantity cannot be negative.");
+                                continue;
+                            }
+
+                            productToUpdate.StockQuantity = newStockQuantity;
 
                             if (productToUpdate.StockQuantity > 0)
                             {
