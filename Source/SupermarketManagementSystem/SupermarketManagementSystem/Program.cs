@@ -594,7 +594,17 @@ namespace SupermarketManagementSystem
                 else if (choice == 12)
                 {
                     Console.Write("Enter supplier ID to remove: ");
-                    int supplierId = Convert.ToInt32(Console.ReadLine());
+                    string supplierIdInput = Console.ReadLine();
+
+                    int supplierId;
+
+                    bool supplierIdValid = int.TryParse(supplierIdInput, out supplierId);
+
+                    if (supplierIdValid == false)
+                    {
+                        Console.WriteLine("Supplier ID must be a whole number.");
+                        continue;
+                    }
 
                     Supplier supplierToRemove = null;
                     bool found = false;
