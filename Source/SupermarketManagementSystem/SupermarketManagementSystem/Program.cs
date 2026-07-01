@@ -32,7 +32,20 @@ namespace SupermarketManagementSystem
                 Console.WriteLine();
 
                 Console.Write("Enter your choice: ");
-                choice = Convert.ToInt32(Console.ReadLine());
+                string choiceInput = Console.ReadLine();
+
+                int menuChoice;
+
+                bool choiceValid = int.TryParse(choiceInput, out menuChoice);
+
+                if (choiceValid == false)
+                {
+                    Console.WriteLine("Menu choice must be a whole number.");
+                    Console.WriteLine();
+                    continue;
+                }
+
+                choice = menuChoice;
 
                 if (choice == 1)
                 {
