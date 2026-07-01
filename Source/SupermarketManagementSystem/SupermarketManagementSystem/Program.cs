@@ -184,7 +184,7 @@ namespace SupermarketManagementSystem
 
                 else if (choice == 2)
                 {
-                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    using (SupermarketDbContext db = new SupermarketDbContext()) 
                     {
                         bool productsFound = false;
 
@@ -457,7 +457,17 @@ namespace SupermarketManagementSystem
                 else if (choice == 8)
                 {
                     Console.Write("Enter product ID to remove: ");
-                    int productId = Convert.ToInt32(Console.ReadLine());
+                    string productIdInput = Console.ReadLine();
+
+                    int productId;
+
+                    bool productIdValid = int.TryParse(productIdInput, out productId);
+
+                    if (productIdValid == false)
+                    {
+                        Console.WriteLine("Product ID must be a whole number.");
+                        continue;
+                    }
 
                     Product productToRemove = null;
                     bool found = false;
