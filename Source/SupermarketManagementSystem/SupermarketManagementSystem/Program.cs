@@ -310,10 +310,30 @@ namespace SupermarketManagementSystem
                 else if (choice == 5)
                 {
                     Console.Write("Enter product ID for sale: ");
-                    int productId = Convert.ToInt32(Console.ReadLine());
+                    string productIdInput = Console.ReadLine();
+
+                    int productId;
+
+                    bool productIdValid = int.TryParse(productIdInput, out productId);
+
+                    if (productIdValid == false)
+                    {
+                        Console.WriteLine("Product ID must be a whole number.");
+                        continue;
+                    }
 
                     Console.Write("Enter quantity sold: ");
-                    int quantitySold = Convert.ToInt32(Console.ReadLine());
+                    string quantityInput = Console.ReadLine();
+
+                    int quantitySold;
+
+                    bool quantityValid = int.TryParse(quantityInput, out quantitySold);
+
+                    if (quantityValid == false)
+                    {
+                        Console.WriteLine("Quantity sold must be a whole number.");
+                        continue;
+                    }
 
                     if (quantitySold <= 0)
                     {
