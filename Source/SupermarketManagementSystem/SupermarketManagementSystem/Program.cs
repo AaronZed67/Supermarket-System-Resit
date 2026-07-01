@@ -1,6 +1,8 @@
-﻿using SupermarketManagementSystem.Models;
-using SupermarketManagementSystem.Data;
+﻿using SupermarketManagementSystem.Data;
 using SupermarketManagementSystem.DataStructures;
+using SupermarketManagementSystem.Models;
+using System.Collections;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SupermarketManagementSystem
 {
@@ -47,84 +49,84 @@ namespace SupermarketManagementSystem
 
                 choice = menuChoice;
 
-                if (choice == 1)
+                if (choice == 1)  //this choice allows us to log a product into the system by enetering all its info
                 {
                     Product newProduct = new Product();
 
-                    Console.Write("Enter Product Name: ");
-                    newProduct.ProductName = Console.ReadLine();
+                    Console.Write("Enter Product Name: ");       //enter product name comes up in the console
+                    newProduct.ProductName = Console.ReadLine(); // reads the input as text
 
                     if (newProduct.ProductName == "")
                     {
-                        Console.WriteLine("Product name is required.");
+                        Console.WriteLine("Product name is required.");  //if name space is left blank the console gives you this prompt to enter the name
                         continue;
                     }
 
-                    Console.Write("Enter Barcode: ");
+                    Console.Write("Enter Barcode: ");   //eneter product barcode comes up in the console after you wrote the name
                     newProduct.Barcode = Console.ReadLine();
 
-                    if (newProduct.Barcode == "")
+                    if (newProduct.Barcode == "")    //if barcode space is left blank the console gives you this prompt to enter a valid barcode
                     {
                         Console.WriteLine("Barcode is required.");
                         continue;
                     }
 
-                    bool barcodeExists = false;
+                    bool barcodeExists = false;     //this validates the barcode that has been enetered 
 
                     using (SupermarketDbContext db = new SupermarketDbContext())
                     {
-                        foreach (Product product in db.Products)
+                        foreach (Product product in db.Products)  
                         {
-                            if (product.Barcode == newProduct.Barcode)
+                            if (product.Barcode == newProduct.Barcode)  //so if the barcode eneters matches another barcode thats already in the system it gives out a message
                             {
-                                barcodeExists = true;
+                                barcodeExists = true; //this means the barcode is matching to one alrady in the system
                             }
                         }
                     }
 
-                    if (barcodeExists == true)
+                    if (barcodeExists == true) //so if barcode exists is true then this is the message given out
                     {
                         Console.WriteLine("A product with this barcode already exists.");
                         continue;
                     }
 
-                    Console.Write("Enter Price: ");
+                    Console.Write("Enter Price: ");  //allows you to eneter a price
                     string priceInput = Console.ReadLine();
 
                     decimal price;
 
-                    bool priceValid = decimal.TryParse(priceInput, out price);
+                    bool priceValid = decimal.TryParse(priceInput, out price); //price must be written as a number for example 1.00 or 2.99
 
-                    if (priceValid == false)
+                    if (priceValid == false)  //price valid just makes sure that the price is a number and not a letter
                     {
-                        Console.WriteLine("Price must be a number.");
+                        Console.WriteLine("Price must be a number."); //this is the promt it gives if it isnt a number
                         continue;
                     }
 
-                    if (price <= 0)
+                    if (price <= 0) //price cannot ba a negative and this make sure of that
                     {
-                        Console.WriteLine("Price must be greater than 0.");
+                        Console.WriteLine("Price must be greater than 0."); //promt if gives if it is less than zero
                         continue;
                     }
 
                     newProduct.Price = price;
 
-                    Console.Write("Enter Stock Quantity: ");
+                    Console.Write("Enter Stock Quantity: ");  //eneter the number of items in stock
                     string stockInput = Console.ReadLine();
 
                     int stockQuantity;
 
-                    bool stockValid = int.TryParse(stockInput, out stockQuantity);
+                    bool stockValid = int.TryParse(stockInput, out stockQuantity); //makes sure that the stock is a whole number and doesnt have a decimal or is a letter
 
                     if (stockValid == false)
                     {
-                        Console.WriteLine("Stock quantity must be a whole number.");
+                        Console.WriteLine("Stock quantity must be a whole number."); //promt if gives if it is a decimal or letters
                         continue;
                     }
 
-                    if (stockQuantity < 0)
+                    if (stockQuantity < 0) //cannot have a stock quantity thats negative
                     {
-                        Console.WriteLine("Stock quantity cannot be negative.");
+                        Console.WriteLine("Stock quantity cannot be negative."); //message it gives if stock is less than zero
                         continue;
                     }
 
@@ -132,52 +134,52 @@ namespace SupermarketManagementSystem
 
                     if (newProduct.StockQuantity > 0)
                     {
-                        newProduct.AvailabilityStatus = "In Stock";
+                        newProduct.AvailabilityStatus = "In Stock"; //if stock quantity is more than zero then its in stock
                     }
                     else
                     {
-                        newProduct.AvailabilityStatus = "Out of Stock";
+                        newProduct.AvailabilityStatus = "Out of Stock"; //otherwise it is out of stock
                     }
 
                     newProduct.RestockDate = DateTime.Now;
 
-                    Console.Write("Enter Category ID: ");
-                    string categoryInput = Console.ReadLine();
+                    Console.Write("Enter Category ID: "); // allows us to enter the category ID
+                    string categoryInput = Console.ReadLine(); // reads the category ID input as text
 
                     int categoryId;
 
-                    bool categoryValid = int.TryParse(categoryInput, out categoryId);
+                    bool categoryValid = int.TryParse(categoryInput, out categoryId);  // checks if category input is a whole number
 
                     if (categoryValid == false)
                     {
-                        Console.WriteLine("Category ID must be a whole number.");
+                        Console.WriteLine("Category ID must be a whole number."); //message it gives if it isnt
                         continue;
                     }
 
-                    newProduct.CategoryId = categoryId;
+                    newProduct.CategoryId = categoryId; 
 
-                    Console.Write("Enter Supplier ID: ");
+                    Console.Write("Enter Supplier ID: "); //allows us to write a supplier id
                     string supplierInput = Console.ReadLine();
 
                     int supplierId;
 
-                    bool supplierValid = int.TryParse(supplierInput, out supplierId);
+                    bool supplierValid = int.TryParse(supplierInput, out supplierId); //also makes sure its a whole number
 
                     if (supplierValid == false)
                     {
-                        Console.WriteLine("Supplier ID must be a whole number.");
+                        Console.WriteLine("Supplier ID must be a whole number."); //message it gives if it isnt
                         continue;
                     }
 
-                    newProduct.SupplierId = supplierId;
+                    newProduct.SupplierId = supplierId;    // saves the supplier ID into the new product
 
-                    using (SupermarketDbContext db = new SupermarketDbContext())
+                    using (SupermarketDbContext db = new SupermarketDbContext())  //this creates a database context so we can access the supermarket database later on
                     {
-                        db.Products.Add(newProduct);
-                        db.SaveChanges();
+                        db.Products.Add(newProduct); //adds the new product to product table
+                        db.SaveChanges(); //saves changes to the db
                     }
 
-                    Console.WriteLine("Product added successfully.");
+                    Console.WriteLine("Product added successfully."); //once product has been added it gives out this message
                 }
 
                 else if (choice == 2)
