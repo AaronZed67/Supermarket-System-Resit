@@ -637,10 +637,30 @@ namespace SupermarketManagementSystem
                 else if (choice == 13)
                 {
                     Console.Write("Enter product ID to update supplier: ");
-                    int productId = Convert.ToInt32(Console.ReadLine());
+                    string productIdInput = Console.ReadLine();
+
+                    int productId;
+
+                    bool productIdValid = int.TryParse(productIdInput, out productId);
+
+                    if (productIdValid == false)
+                    {
+                        Console.WriteLine("Product ID must be a whole number.");
+                        continue;
+                    }
 
                     Console.Write("Enter new supplier ID: ");
-                    int newSupplierId = Convert.ToInt32(Console.ReadLine());
+                    string supplierIdInput = Console.ReadLine();
+
+                    int newSupplierId;
+
+                    bool supplierIdValid = int.TryParse(supplierIdInput, out newSupplierId);
+
+                    if (supplierIdValid == false)
+                    {
+                        Console.WriteLine("Supplier ID must be a whole number.");
+                        continue;
+                    }
 
                     bool productFound = false;
                     bool supplierFound = false;
